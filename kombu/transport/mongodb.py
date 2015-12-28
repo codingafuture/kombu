@@ -20,6 +20,7 @@ from kombu.five import Empty
 from kombu.syn import _detect_environment
 from kombu.utils.encoding import bytes_to_str
 
+from kombu.utils.patch_options import patch
 from . import virtual
 
 try:
@@ -161,7 +162,8 @@ class Channel(virtual.Channel):
         port = client.port if client.port is not None else DEFAULT_PORT
 
         parsed = uri_parser.parse_uri(hostname, port)
-
+        if pymongo.version_tuple >= (3, ):
+            parsed = patch(parsed)
         dbname = parsed['database'] or client.virtual_host
 
         if dbname in ('/', None):
