@@ -144,7 +144,6 @@ extras_require = extra['extras_require'] = {
     'qpid': extras('qpid.txt'),
 }
 
-extras_require[':python_version=="2.6"'] = reqs('py26.txt')
 
 setup(
     name='kombu',
